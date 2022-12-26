@@ -1,0 +1,19 @@
+{
+  "family": "ruby-aws-repo",
+  "containerDefinitions": [
+    {
+      "name": "ruby-aws-repo",
+      "image": "495714332994.dkr.ecr.us-east-1.amazonaws.com/rubyaws/rubyawsrepo:latest",
+      "cpu": 512,
+      "memory": 512,
+      "portMappings": [
+          {
+              "containerPort": 3000,
+              "hostPort": 3000
+          }
+      ],
+      "essential": true,
+      "environment": []
+    }
+  ]
+}
