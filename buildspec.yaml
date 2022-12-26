@@ -1,7 +1,4 @@
-env:
-
-  variables:
-    LAMBDA_PKG_BUCKET_PREFIX: mia
+version: 0.2
 
 phases:
   pre_build:
