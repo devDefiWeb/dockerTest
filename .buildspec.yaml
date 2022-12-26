@@ -1,0 +1,31 @@
+env:
+
+  variables:
+    LAMBDA_PKG_BUCKET_PREFIX: mia
+
+phases:
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws --version
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 495714332994.dkr.ecr.us-east-1.amazonaws.com
+      
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Building the Docker image...
+      - docker build -t rubyaws/rubyawsrepo .
+      - docker tag rubyaws/rubyawsrepo:latest 495714332994.dkr.ecr.us-east-1.amazonaws.com/rubyaws/rubyawsrepo:latest
+
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Pushing the Docker images...
+      - docker push 495714332994.dkr.ecr.us-east-1.amazonaws.com/rubyaws/rubyawsrepo:latest
+      - echo Writing image definitions file...
+      - printf '[{"name":"demo-ruby-app","imageUri":"%s"}]' 495714332994.dkr.ecr.us-east-1.amazonaws.com/rubyaws/rubyawsrepo:latest > imagedefinitions.json
+
+artifacts:
+  files:
+    - imagedefinitions.json
+    
